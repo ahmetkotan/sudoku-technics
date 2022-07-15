@@ -92,13 +92,13 @@ class DataMixin:
                 if len(possibilities) == 0:
                     self.print_possibilities()
                     raise Exception(f"Error in {row_no + 1}.row {col_no + 1}.column")
-                elif len(possibilities) == 1:
-                    print(
-                        f"Found one possibility. Changed {row_no + 1}.row {col_no + 1}.columns with {possibilities[0]}"
-                    )
-                    self.data[row_no][col_no] = possibilities[0]
-                    self.possibilities[row_no][col_no] = possibilities[0]
-                    self.changed = True
+                # elif len(possibilities) == 1:
+                #     print(
+                #         f"Found one possibility. Changed {row_no + 1}.row {col_no + 1}.columns with {possibilities[0]}"
+                #     )
+                #     self.data[row_no][col_no] = possibilities[0]
+                #     self.possibilities[row_no][col_no] = possibilities[0]
+                #     self.changed = True
                 else:
                     self.possibilities[row_no][col_no] = tuple(possibilities)
 

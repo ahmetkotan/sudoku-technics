@@ -2,12 +2,13 @@ from copy import deepcopy
 from typing import List
 
 from sudoku.mixins import DataMixin
-from sudoku.technics.singles import HiddenSingles
+from sudoku.technics.hidden_singles import HiddenSingles
+from sudoku.technics.singles import Singles
 from sudoku.technics.bowman import BowmanBingo
 
 
 class Sudoku(DataMixin):
-    methods = [HiddenSingles, BowmanBingo]
+    methods = [HiddenSingles, Singles, BowmanBingo]
     changed: bool = True
 
     def __init__(self, initial_data: List[List[int]] = None, size: int = 9):
