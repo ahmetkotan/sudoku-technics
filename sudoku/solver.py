@@ -5,10 +5,12 @@ from sudoku.mixins import DataMixin
 from sudoku.technics.hidden_singles import HiddenSingles
 from sudoku.technics.singles import Singles
 from sudoku.technics.bowman import BowmanBingo
+from sudoku.simplifications.double import DoublesSimplification
 
 
 class Sudoku(DataMixin):
     methods = [HiddenSingles, Singles, BowmanBingo]
+    simplifications = [DoublesSimplification]
     changed: bool = True
 
     def __init__(self, initial_data: List[List[int]] = None, size: int = 9):
@@ -40,7 +42,7 @@ class Sudoku(DataMixin):
                     self.print_possibilities()
                     raise Exception(f"Error in {row_no + 1}.row {col_no + 1}.column")
                 else:
-                    self.possibilities[row_no][col_no] = tuple(possibilities)
+                    self.possibilities[row_no][col_no] = tuple(sorted(possibilities))
 
     def run_technics(self):
         def callback():
@@ -54,6 +56,12 @@ class Sudoku(DataMixin):
             )
             method.run()
 
+    def run_simplifications(self):
+        for simplifier_class in self.simplifications:
+            simplifier = simplifier_class(initial_data=self.data, possibilities=self.possibilities)
+            simplifier.run()
+
     def solve(self):
         self.fill_possibilities()
+        self.run_simplifications()
         self.run_technics()

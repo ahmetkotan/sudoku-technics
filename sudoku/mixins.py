@@ -1,5 +1,7 @@
 from typing import List, Tuple, Union
-from sudoku.getters import get_group, get_column, has_in_group, has_in_column
+
+from sudoku.getters import (get_column, get_group, get_row, has_in_column,
+                            has_in_group, has_in_row)
 
 
 class DataMixin:
@@ -23,7 +25,7 @@ class DataMixin:
             print(f"{n if with_rows else ''} {line}")
 
     def has_in_row(self, row: int, number: int) -> bool:
-        return number in self.data[row]
+        return has_in_row(row_no=row, number=number, data=self.data)
 
     def find_in_row(self, row: int, number: int) -> int:
         if self.has_in_row(row=row, number=number):
@@ -40,7 +42,7 @@ class DataMixin:
         return has_in_column(column=column, number=number, data=self.data)
 
     def get_row(self, row_no: int, possibilities: bool = False) -> List[int]:
-        return self.possibilities[row_no] if possibilities else self.data[row_no]
+        return get_row(row_no=row_no, data=self.possibilities if possibilities else self.data)
 
     def get_column(self, col_no: int, possibilities: bool = False) -> List[int]:
         return get_column(col_no=col_no, data=self.possibilities if possibilities else self.data)

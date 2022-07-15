@@ -9,4 +9,4 @@ class Singles(BaseTechnic):
                     if len(col) == 1:
                         self.data[row_no][col_no] = col[0]
                         self.possibilities[row_no][col_no] = col[0]
-                        self.fill_possibilities()
+                        self.callback()
