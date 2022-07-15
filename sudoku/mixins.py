@@ -40,13 +40,28 @@ class DataMixin:
     def get_row(self, row_no: int, possibilities: bool = False) -> List[int]:
         return self.possibilities[row_no] if possibilities else self.data[row_no]
 
-    def get_column(self, col_no: int) -> List[int]:
-        return [line[col_no] for line in self.data]
+    def get_column(self, col_no: int, possibilities: bool = False) -> List[int]:
+        return [
+            line[col_no]
+            for line in (self.possibilities if possibilities else self.data)
+        ]
 
-    def get_group(self, row_no: int, col_no: int) -> List[List[int]]:
+    def get_group(
+        self, row_no: int, col_no: int, possibilities: bool = False, as_list: bool = False
+    ) -> Union[List[List[int]], List[int]]:
         start_row = row_no - (row_no % 3)
         start_column = col_no - (col_no % 3)
-        group_lines = self.data[start_row: start_row + 3]
+        group_lines = (
+            self.possibilities[start_row: start_row + 3]
+            if possibilities
+            else self.data[start_row: start_row + 3]
+        )
+
+        if as_list:
+            group: List[int] = []
+            for line in group_lines:
+                group.extend(line[start_column: start_column + 3])
+            return group
 
         return [line[start_column: start_column + 3] for line in group_lines]
 
