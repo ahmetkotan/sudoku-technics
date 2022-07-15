@@ -1,0 +1,2 @@
+class BowmanFailedError(Exception):
+    pass

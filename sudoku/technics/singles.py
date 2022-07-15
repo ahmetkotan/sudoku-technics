@@ -31,7 +31,7 @@ class HiddenSingles(BaseTechnic):
             print(
                 f"Found hidden single in row. Changed {row_no + 1}.row {col_no + 1}.columns with {number}"
             )
-            self.callback()
+            self.reload_possibilities()
 
     def find_hidden_singles_in_column(self, col_no: int):
         numbers = self.get_column(col_no=col_no, possibilities=True)
@@ -42,7 +42,7 @@ class HiddenSingles(BaseTechnic):
             print(
                 f"Found hidden single in column. Changed {row_no + 1}.row {col_no + 1}.columns with {number}"
             )
-            self.callback()
+            self.reload_possibilities()
 
     def find_hidden_singles_in_group(self, group_no: int):
         start_row = int(group_no / 3) * 3
@@ -59,7 +59,7 @@ class HiddenSingles(BaseTechnic):
             print(
                 f"Found hidden single in group. Changed {row_no + 1}.row {col_no + 1}.columns with {number}"
             )
-            self.callback()
+            self.reload_possibilities()
 
     def run(self):
         for n in range(self.size):
