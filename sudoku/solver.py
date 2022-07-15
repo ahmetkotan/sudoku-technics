@@ -20,14 +20,40 @@ class Sudoku(DataMixin):
         self.data = initial_data
         self.possibilities = deepcopy(initial_data)
 
+    def fill_possibilities(self):
+        self.changed = False
+        for row_no, line in enumerate(self.data):
+            line_possibilities = set(range(0, self.size + 1)) - set(line)
+            for col_no in range(self.size):
+                if line[col_no] != 0:
+                    continue
+
+                possibilities = [
+                    number
+                    for number in line_possibilities
+                    if not self.has_in_column(column=col_no, number=number)
+                    and not self.has_in_group(
+                        row_no=row_no, col_no=col_no, number=number
+                    )
+                ]
+                if len(possibilities) == 0:
+                    self.print_possibilities()
+                    raise Exception(f"Error in {row_no + 1}.row {col_no + 1}.column")
+                else:
+                    self.possibilities[row_no][col_no] = tuple(possibilities)
+
     def run_technics(self):
         def callback():
             self.solve()
 
         for method_class in self.methods:
-            method = method_class(initial_data=self.data, possibilities=self.possibilities, callback=callback)
+            method = method_class(
+                initial_data=self.data,
+                possibilities=self.possibilities,
+                callback=callback,
+            )
             method.run()
 
     def solve(self):
-        self.reload_possibilities()
+        self.fill_possibilities()
         self.run_technics()

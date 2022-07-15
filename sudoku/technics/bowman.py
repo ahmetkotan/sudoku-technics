@@ -3,6 +3,7 @@ from typing import Tuple, List, Union
 from copy import deepcopy
 from sudoku.exceptions import BowmanFailedError
 from collections import Counter
+from sudoku.getters import has_in_column, has_in_group
 
 
 class BowmanBingo(BaseTechnic):
@@ -16,7 +17,9 @@ class BowmanBingo(BaseTechnic):
         return -1, -1
 
     def fill_temporary_possibilities(
-        self, tmp_possibilities: List[List[Union[Tuple[int], int]]], tmp_data: List[List[int]],
+        self,
+        tmp_possibilities: List[List[Union[Tuple[int], int]]],
+        tmp_data: List[List[int]],
     ):
         for row_no, line in enumerate(tmp_data):
             line_possibilities = set(range(0, self.size + 1)) - set(line)
@@ -27,9 +30,9 @@ class BowmanBingo(BaseTechnic):
                 possibilities = [
                     number
                     for number in line_possibilities
-                    if not self.has_in_column(column=col_no, number=number)
-                       and not self.has_in_group(
-                        row_no=row_no, col_no=col_no, number=number
+                    if not has_in_column(column=col_no, number=number, data=tmp_data)
+                    and not has_in_group(
+                        row_no=row_no, col_no=col_no, number=number, data=tmp_data
                     )
                 ]
                 if len(possibilities) == 0:
@@ -37,7 +40,9 @@ class BowmanBingo(BaseTechnic):
                 elif len(possibilities) == 1:
                     tmp_data[row_no][col_no] = possibilities[0]
                     tmp_possibilities[row_no][col_no] = possibilities[0]
-                    return self.fill_temporary_possibilities(tmp_possibilities=tmp_possibilities, tmp_data=tmp_data)
+                    return self.fill_temporary_possibilities(
+                        tmp_possibilities=tmp_possibilities, tmp_data=tmp_data
+                    )
                 else:
                     tmp_possibilities[row_no][col_no] = tuple(possibilities)
 
@@ -50,7 +55,9 @@ class BowmanBingo(BaseTechnic):
             try:
                 tmp_possibilities[row_no][col_no] = number
                 tmp_data[row_no][col_no] = number
-                self.fill_temporary_possibilities(tmp_possibilities=tmp_possibilities, tmp_data=tmp_data)
+                self.fill_temporary_possibilities(
+                    tmp_possibilities=tmp_possibilities, tmp_data=tmp_data
+                )
             except BowmanFailedError:
                 results[number] = False
 
@@ -59,7 +66,9 @@ class BowmanBingo(BaseTechnic):
             pick_number = cell[0] if results[cell[0]] else cell[1]
             self.data[row_no][col_no] = pick_number
             self.possibilities[row_no][col_no] = pick_number
-            print(f"Found {row_no + 1}.row {col_no + 1}.column with Bowman's Bingo as {pick_number}")
+            print(
+                f"Found {row_no + 1}.row {col_no + 1}.column with Bowman's Bingo as {pick_number}"
+            )
             self.callback()
 
     def run(self):

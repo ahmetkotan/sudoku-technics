@@ -1,4 +1,5 @@
 from typing import List, Tuple, Union
+from sudoku.getters import get_group, get_column, has_in_group, has_in_column
 
 
 class DataMixin:
@@ -36,73 +37,25 @@ class DataMixin:
         return -1
 
     def has_in_column(self, column: int, number: int) -> bool:
-        return self.find_in_column(column=column, number=number) != -1
+        return has_in_column(column=column, number=number, data=self.data)
 
     def get_row(self, row_no: int, possibilities: bool = False) -> List[int]:
         return self.possibilities[row_no] if possibilities else self.data[row_no]
 
     def get_column(self, col_no: int, possibilities: bool = False) -> List[int]:
-        return [
-            line[col_no]
-            for line in (self.possibilities if possibilities else self.data)
-        ]
+        return get_column(col_no=col_no, data=self.possibilities if possibilities else self.data)
 
     def get_group(
         self, row_no: int, col_no: int, possibilities: bool = False, as_list: bool = False
     ) -> Union[List[List[int]], List[int]]:
-        start_row = row_no - (row_no % 3)
-        start_column = col_no - (col_no % 3)
-        group_lines = (
-            self.possibilities[start_row: start_row + 3]
-            if possibilities
-            else self.data[start_row: start_row + 3]
-        )
-
+        group = get_group(row_no=row_no, col_no=col_no, data=self.possibilities if possibilities else self.data)
         if as_list:
-            group: List[int] = []
-            for line in group_lines:
-                group.extend(line[start_column: start_column + 3])
-            return group
+            numbers: List[int] = []
+            for line in group:
+                numbers.extend(line)
+            return numbers
 
-        return [line[start_column: start_column + 3] for line in group_lines]
+        return group
 
     def has_in_group(self, row_no: int, col_no: int, number: int) -> bool:
-        for line in self.get_group(row_no=row_no, col_no=col_no):
-            if number in line:
-                return True
-
-        return False
-
-    def fill_possibilities(self):
-        self.changed = False
-        for row_no, line in enumerate(self.data):
-            line_possibilities = set(range(0, self.size + 1)) - set(line)
-            for col_no in range(self.size):
-                if line[col_no] != 0:
-                    continue
-
-                possibilities = [
-                    number
-                    for number in line_possibilities
-                    if not self.has_in_column(column=col_no, number=number)
-                       and not self.has_in_group(
-                        row_no=row_no, col_no=col_no, number=number
-                    )
-                ]
-                if len(possibilities) == 0:
-                    self.print_possibilities()
-                    raise Exception(f"Error in {row_no + 1}.row {col_no + 1}.column")
-                # elif len(possibilities) == 1:
-                #     print(
-                #         f"Found one possibility. Changed {row_no + 1}.row {col_no + 1}.columns with {possibilities[0]}"
-                #     )
-                #     self.data[row_no][col_no] = possibilities[0]
-                #     self.possibilities[row_no][col_no] = possibilities[0]
-                #     self.changed = True
-                else:
-                    self.possibilities[row_no][col_no] = tuple(possibilities)
-
-    def reload_possibilities(self):
-        self.fill_possibilities()
-        while self.changed:
-            self.fill_possibilities()
+        return has_in_group(row_no=row_no, col_no=col_no, number=number, data=self.data)
