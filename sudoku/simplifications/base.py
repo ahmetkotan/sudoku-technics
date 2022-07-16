@@ -46,7 +46,7 @@ class BaseSimplifier(DataMixin):
             self.simplify_group(group_no=n)
             changed = self.changed or changed
 
-        if changed:
+        if changed and self.callback:
             self.callback()
 
     def run(self):

@@ -4,15 +4,15 @@ from typing import List
 from sudoku.mixins import DataMixin
 from sudoku.technics.hidden_singles import HiddenSingles
 from sudoku.technics.singles import Singles
-from sudoku.technics.bowman import BowmanBingo
 from sudoku.simplifications.double import DoublesSimplification
 from sudoku.simplifications.triple import TripleSimplification
 from sudoku.simplifications.hidden_double import HiddenDoubleSimplification
+from sudoku.simplifications.reduction import ReductionSimplification
 
 
 class Sudoku(DataMixin):
-    methods = [HiddenSingles, Singles, BowmanBingo]
-    simplifications = [DoublesSimplification, TripleSimplification, HiddenDoubleSimplification]
+    methods = [HiddenSingles, Singles]
+    simplifications = [DoublesSimplification, TripleSimplification, HiddenDoubleSimplification, ReductionSimplification]
 
     changed: bool = True
     simplification_continue: bool = True

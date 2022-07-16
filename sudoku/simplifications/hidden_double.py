@@ -26,7 +26,21 @@ class HiddenDoubleSimplification(BaseSimplifier):
             self.possibilities[row_no][col_no] = double
 
     def simplify_column(self, col_no: int):
-        pass
+        numbers = self.get_column(col_no=col_no, possibilities=True)
+        for row_no, double in self.find_hidden_doubles(numbers=numbers):
+            print(
+                f"Simplify Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}. Old: {self.possibilities[row_no][col_no]}")
+            self.possibilities[row_no][col_no] = double
 
     def simplify_group(self, group_no: int):
-        pass
+        start_row = int(group_no / 3) * 3
+        start_col = (group_no % 3) * 3
+        numbers = self.get_group(
+            row_no=start_row, col_no=start_col, possibilities=True, as_list=True
+        )
+        for cell_no, double in self.find_hidden_doubles(numbers=numbers):
+            row_no = start_row + int(cell_no / 3)
+            col_no = start_col + cell_no % 3
+            print(
+                f"Simplify Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}. Old: {self.possibilities[row_no][col_no]}")
+            self.possibilities[row_no][col_no] = double
