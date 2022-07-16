@@ -6,12 +6,15 @@ from sudoku.technics.hidden_singles import HiddenSingles
 from sudoku.technics.singles import Singles
 from sudoku.technics.bowman import BowmanBingo
 from sudoku.simplifications.double import DoublesSimplification
+from sudoku.simplifications.triple import TripleSimplification
 
 
 class Sudoku(DataMixin):
     methods = [HiddenSingles, Singles, BowmanBingo]
-    simplifications = [DoublesSimplification]
+    simplifications = [DoublesSimplification, TripleSimplification]
+
     changed: bool = True
+    simplification_continue: bool = True
 
     def __init__(self, initial_data: List[List[int]] = None, size: int = 9):
         self.data = initial_data or []
@@ -57,8 +60,11 @@ class Sudoku(DataMixin):
             method.run()
 
     def run_simplifications(self):
+        def callback():
+            self.run_simplifications()
+
         for simplifier_class in self.simplifications:
-            simplifier = simplifier_class(initial_data=self.data, possibilities=self.possibilities)
+            simplifier = simplifier_class(initial_data=self.data, possibilities=self.possibilities, callback=callback)
             simplifier.run()
 
     def solve(self):

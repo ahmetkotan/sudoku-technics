@@ -1,26 +1,26 @@
-from collections import defaultdict
-from typing import List, Union, Tuple
-
 from sudoku.simplifications.base import BaseSimplifier
+from itertools import combinations
+from typing import List, Tuple, Union
 
 
-class DoublesSimplification(BaseSimplifier):
+class TripleSimplification(BaseSimplifier):
     @staticmethod
-    def find_pairs(numbers: List[int]):
-        pairs = defaultdict(lambda: 0)
-        for cell in numbers:
-            if isinstance(cell, tuple):
-                if len(cell) == 2:
-                    pairs[cell] += 1
-
-        return [pair for pair, count in pairs.items() if count == 2]
+    def find_triples(numbers: List[Union[Tuple[int, ...], int]]):
+        possibilities = [cell for cell in numbers if isinstance(cell, tuple)]
+        keys = set([x for cell in possibilities for x in cell])
+        options = combinations(keys, 3)
+        for option in options:
+            x, y, z = sorted(option)
+            results = [(x, y) in numbers, (x, z) in numbers, (y, z) in numbers, (x, y, z) in numbers]
+            if results.count(True) == 3:
+                yield x, y, z
 
     def simplify_numbers(self, numbers: List[Union[Tuple[int, ...], int]]):
-        for pair in self.find_pairs(numbers=numbers):
+        for triple in self.find_triples(numbers=numbers):
             for cell_no, cell in enumerate(numbers):
-                if not isinstance(cell, tuple) or pair == cell:
+                if not isinstance(cell, tuple) or triple == cell:
                     continue
-                remaining = tuple(sorted(set(cell) - set(pair)))
+                remaining = tuple(sorted(set(cell) - set(triple)))
                 if remaining and remaining != cell:
                     self.changed = True
                     yield cell_no, remaining
@@ -48,3 +48,4 @@ class DoublesSimplification(BaseSimplifier):
             col_no = start_col + cell_no % 3
             self.possibilities[row_no][col_no] = remaining
             return self.callback()
+
