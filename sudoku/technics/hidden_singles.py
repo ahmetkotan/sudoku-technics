@@ -3,17 +3,6 @@ from sudoku.technics.base import BaseTechnic
 
 
 class HiddenSingles(BaseTechnic):
-    def get_possibilities_counts(
-        self, numbers: List[Union[Tuple[int], int]]
-    ) -> Dict[int, int]:
-        counts = {i: 0 for i in range(1, self.size + 1)}
-        for number in numbers:
-            if isinstance(number, tuple):
-                for n in number:
-                    counts[n] += 1
-
-        return counts
-
     @staticmethod
     def find_hidden_singles(numbers: List[int], counts: Dict[int, int]):
         for no, number in enumerate(numbers):

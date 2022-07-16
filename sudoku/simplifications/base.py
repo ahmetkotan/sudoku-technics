@@ -30,16 +30,24 @@ class BaseSimplifier(DataMixin):
         raise NotImplementedError
 
     def simplify(self):
+        changed = False
         for n in range(self.size):
+            self.changed = False
             self.simplify_row(row_no=n)
+            changed = self.changed or changed
 
         for n in range(self.size):
             self.changed = False
             self.simplify_column(col_no=n)
+            changed = self.changed or changed
 
         for n in range(self.size):
             self.changed = False
             self.simplify_group(group_no=n)
+            changed = self.changed or changed
+
+        if changed:
+            self.callback()
 
     def run(self):
         self.simplify()

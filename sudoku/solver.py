@@ -7,11 +7,12 @@ from sudoku.technics.singles import Singles
 from sudoku.technics.bowman import BowmanBingo
 from sudoku.simplifications.double import DoublesSimplification
 from sudoku.simplifications.triple import TripleSimplification
+from sudoku.simplifications.hidden_double import HiddenDoubleSimplification
 
 
 class Sudoku(DataMixin):
     methods = [HiddenSingles, Singles, BowmanBingo]
-    simplifications = [DoublesSimplification, TripleSimplification]
+    simplifications = [DoublesSimplification, TripleSimplification, HiddenDoubleSimplification]
 
     changed: bool = True
     simplification_continue: bool = True

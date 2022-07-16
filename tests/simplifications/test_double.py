@@ -7,6 +7,7 @@ def test_simplify_rows():
     simplifier = DoublesSimplification(
         initial_data=[[0, 0, 0, 0, 0]],
         possibilities=possibilities,
+        callback=lambda: None,
     )
 
     simplifier.simplify_row(row_no=0)
@@ -22,6 +23,7 @@ def test_simplify_columns():
     simplifier = DoublesSimplification(
         initial_data=[[0], [0], [0], [0], [0]],
         possibilities=possibilities,
+        callback=lambda: None,
     )
 
     simplifier.simplify_column(col_no=0)

@@ -28,14 +28,15 @@ class DoublesSimplification(BaseSimplifier):
     def simplify_row(self, row_no: int):
         numbers = self.get_row(row_no=row_no, possibilities=True)
         for col_no, remaining in self.simplify_numbers(numbers=numbers):
+            print(f"Simplify Double {row_no + 1}.row {col_no + 1}.column with {remaining}. Old: {self.possibilities[row_no][col_no]}")
             self.possibilities[row_no][col_no] = remaining
-            return self.callback()
 
     def simplify_column(self, col_no: int):
         numbers = self.get_column(col_no=col_no, possibilities=True)
         for row_no, remaining in self.simplify_numbers(numbers=numbers):
+            print(
+                f"Simplify Double {row_no + 1}.row {col_no + 1}.column with {remaining}. Old: {self.possibilities[row_no][col_no]}")
             self.possibilities[row_no][col_no] = remaining
-            return self.callback()
 
     def simplify_group(self, group_no: int):
         start_row = int(group_no / 3) * 3
@@ -46,5 +47,6 @@ class DoublesSimplification(BaseSimplifier):
         for cell_no, remaining in self.simplify_numbers(numbers=numbers):
             row_no = start_row + int(cell_no / 3)
             col_no = start_col + cell_no % 3
+            print(
+                f"Simplify Double {row_no + 1}.row {col_no + 1}.column with {remaining}. Old: {self.possibilities[row_no][col_no]}")
             self.possibilities[row_no][col_no] = remaining
-            return self.callback()
