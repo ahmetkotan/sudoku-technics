@@ -16,3 +16,10 @@ class BaseSimplifier(DataMixin):
         self.data = initial_data
         self.possibilities = possibilities
         self.size = size
+
+    def simplify(self):
+        raise NotImplementedError
+
+    def run(self):
+        while self.changed:
+            self.simplify()
