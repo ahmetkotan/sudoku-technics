@@ -10,3 +10,13 @@
 
 
 ![solved export numbers](images/solved_expert_numbers.png)
+
+
+## TODO
+### Simplifications
+* X-Wing
+* Y-Wing
+* Z-Wing
+
+### Helpers
+* Rich
