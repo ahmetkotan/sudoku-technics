@@ -1,6 +1,12 @@
 # Sudoku Technical Solver
 *weekend project*
 
-![hard](images/hard.png)
+**Expert:**  
 
-![solved hard](images/solved_hard.png)
+![expert](images/expert.png)  
+
+
+![solved expert](images/solved_expert.png)  
+
+
+![solved export numbers](images/solved_expert_numbers.png)
