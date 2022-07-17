@@ -1,5 +1,5 @@
 from sudoku.simplifications.base import BaseSimplifier
-from typing import Tuple, List, Union, Callable
+from typing import Tuple, List, Generator, Callable
 from sudoku.getters import get_group_positions
 
 
@@ -25,7 +25,9 @@ class SkyScraperSimplification(BaseSimplifier):
         intersection_positions = set(first_effected_points).intersection(second_effected_points) - set(expected_points)
         return [(x, y) for x, y in intersection_positions if isinstance(self.possibilities[x][y], tuple)]
 
-    def find_intersection_points(self, actual_no: int, get_function: Callable):
+    def find_intersection_points(
+        self, actual_no: int, get_function: Callable
+    ) -> Generator[Tuple[int, int, int, int, int], None, None]:
         numbers = get_function(actual_no, possibilities=True)
         counts = self.get_possibilities_counts(numbers=numbers)
         for pair in [key for key, value in counts.items() if value == 2]:
@@ -58,7 +60,7 @@ class SkyScraperSimplification(BaseSimplifier):
         second_col: int,
         intersection_point: int,
         pair: int,
-    ):
+    ) -> Generator[Tuple[int, int, Tuple[int, ...]], None, None]:
         first_point = (first_row, first_col)
         second_point = (second_row, second_col)
         expected_points = [

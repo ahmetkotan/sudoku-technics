@@ -1,12 +1,12 @@
 from collections import defaultdict
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Generator
 
 from sudoku.simplifications.base import BaseSimplifier
 
 
 class DoublesSimplification(BaseSimplifier):
     @staticmethod
-    def find_pairs(numbers: List[int]):
+    def find_pairs(numbers: List[int]) -> List[Tuple[int, ...]]:
         pairs = defaultdict(lambda: 0)
         for cell in numbers:
             if isinstance(cell, tuple):
@@ -15,7 +15,9 @@ class DoublesSimplification(BaseSimplifier):
 
         return [pair for pair, count in pairs.items() if count == 2]
 
-    def simplify_numbers(self, numbers: List[Union[Tuple[int, ...], int]]):
+    def simplify_numbers(
+        self, numbers: List[Union[Tuple[int, ...], int]]
+    ) -> Generator[Tuple[int, Tuple[int, ...]], None, None]:
         for pair in self.find_pairs(numbers=numbers):
             for cell_no, cell in enumerate(numbers):
                 if not isinstance(cell, tuple) or pair == cell:

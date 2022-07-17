@@ -1,10 +1,12 @@
 from sudoku.simplifications.base import BaseSimplifier
 from itertools import combinations
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Generator
 
 
 class HiddenDoubleSimplification(BaseSimplifier):
-    def find_hidden_doubles(self, numbers: List[Union[Tuple[int, ...], int]]):
+    def find_hidden_doubles(
+        self, numbers: List[Union[Tuple[int, ...], int]]
+    ) -> Generator[Tuple[int, Tuple[int, int]], None, None]:
         possibilities = [cell for cell in numbers if isinstance(cell, tuple)]
         keys = set([x for cell in possibilities for x in cell])
         counts = self.get_possibilities_counts(numbers=possibilities)

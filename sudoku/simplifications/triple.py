@@ -1,11 +1,11 @@
 from sudoku.simplifications.base import BaseSimplifier
 from itertools import combinations
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Generator
 
 
 class TripleSimplification(BaseSimplifier):
     @staticmethod
-    def find_triples(numbers: List[Union[Tuple[int, ...], int]]):
+    def find_triples(numbers: List[Union[Tuple[int, ...], int]]) -> Generator[Tuple[int, int, int], None, None]:
         possibilities = [cell for cell in numbers if isinstance(cell, tuple)]
         keys = set([x for cell in possibilities for x in cell])
         options = combinations(keys, 3)
@@ -15,7 +15,9 @@ class TripleSimplification(BaseSimplifier):
             if results.count(True) == 3:
                 yield x, y, z
 
-    def simplify_numbers(self, numbers: List[Union[Tuple[int, ...], int]]):
+    def simplify_numbers(
+        self, numbers: List[Union[Tuple[int, ...], int]]
+    ) -> Generator[Tuple[int, Tuple[int, ...]], None, None]:
         for triple in self.find_triples(numbers=numbers):
             for cell_no, cell in enumerate(numbers):
                 if not isinstance(cell, tuple) or triple == cell:
