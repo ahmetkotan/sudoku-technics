@@ -1,4 +1,7 @@
-from typing import List, Tuple, Union, Dict
+# Standard Library
+from typing import Dict, List, Tuple, Union
+
+# Sudoku Stuff
 from sudoku.technics.base import BaseTechnic
 
 

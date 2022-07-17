@@ -1,5 +1,8 @@
-from sudoku.simplifications.sky_scraper import SkyScraperSimplification
+# Standard Library
 from copy import deepcopy
+
+# Sudoku Stuff
+from sudoku.simplifications.sky_scraper import SkyScraperSimplification
 
 column_possibilities = [
     [0] * 9,

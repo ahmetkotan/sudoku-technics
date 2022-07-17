@@ -1,3 +1,4 @@
+# Sudoku Stuff
 from sudoku.utils import convert_from_string
 
 

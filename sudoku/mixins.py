@@ -1,14 +1,9 @@
-from typing import List, Tuple, Union, Dict
+# Standard Library
 from collections import defaultdict
+from typing import Dict, List, Tuple, Union
 
-from sudoku.getters import (
-    get_column,
-    get_group,
-    get_row,
-    has_in_column,
-    has_in_group,
-    has_in_row,
-)
+# Sudoku Stuff
+from sudoku.getters import get_row, get_group, get_column, has_in_row, has_in_group, has_in_column
 
 
 class DataMixin:

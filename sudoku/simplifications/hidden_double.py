@@ -1,6 +1,9 @@
-from sudoku.simplifications.base import BaseSimplifier
+# Standard Library
 from itertools import combinations
-from typing import List, Union, Tuple, Generator
+from typing import List, Tuple, Union, Generator
+
+# Sudoku Stuff
+from sudoku.simplifications.base import BaseSimplifier
 
 
 class HiddenDoubleSimplification(BaseSimplifier):

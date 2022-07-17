@@ -1,3 +1,4 @@
+# Sudoku Stuff
 from sudoku.technics.base import BaseTechnic
 
 

@@ -1,3 +1,4 @@
+# Sudoku Stuff
 from sudoku.getters import get_group_positions
 
 

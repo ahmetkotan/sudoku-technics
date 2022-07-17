@@ -1,14 +1,16 @@
-from copy import deepcopy
+# Standard Library
 from typing import List
+from copy import deepcopy
 
+# Sudoku Stuff
 from sudoku.mixins import DataMixin
-from sudoku.technics.hidden_singles import HiddenSingles
 from sudoku.technics.singles import Singles
-from sudoku.simplifications.double import DoublesSimplification
+from sudoku.technics.hidden_singles import HiddenSingles
 from sudoku.simplifications.triple import TripleSimplification
-from sudoku.simplifications.hidden_double import HiddenDoubleSimplification
+from sudoku.simplifications.double import DoublesSimplification
 from sudoku.simplifications.reduction import ReductionSimplification
 from sudoku.simplifications.sky_scraper import SkyScraperSimplification
+from sudoku.simplifications.hidden_double import HiddenDoubleSimplification
 
 
 class Sudoku(DataMixin):

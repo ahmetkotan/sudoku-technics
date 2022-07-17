@@ -1,3 +1,4 @@
+# Sudoku Stuff
 from sudoku.simplifications.double import DoublesSimplification
 
 

@@ -1,3 +1,4 @@
+# Sudoku Stuff
 from sudoku.simplifications.hidden_double import HiddenDoubleSimplification
 
 

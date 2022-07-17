@@ -1,6 +1,9 @@
-from sudoku.simplifications.base import BaseSimplifier
-from typing import Tuple, List, Generator, Callable
+# Standard Library
+from typing import List, Tuple, Callable, Generator
+
+# Sudoku Stuff
 from sudoku.getters import get_group_positions
+from sudoku.simplifications.base import BaseSimplifier
 
 
 class SkyScraperSimplification(BaseSimplifier):

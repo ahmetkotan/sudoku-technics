@@ -1,5 +1,8 @@
+# Standard Library
+from typing import List, Tuple, Union
+
+# Sudoku Stuff
 from sudoku.simplifications.reduction import ReductionSimplification
-from typing import List, Union, Tuple
 
 
 def test_simplify_rows():

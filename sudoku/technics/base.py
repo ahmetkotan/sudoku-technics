@@ -1,5 +1,7 @@
+# Standard Library
 from typing import List, Tuple, Union, Callable
 
+# Sudoku Stuff
 from sudoku.mixins import DataMixin
 
 

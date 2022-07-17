@@ -1,7 +1,10 @@
-from sudoku.simplifications.base import BaseSimplifier
-from sudoku.utils import chunks
+# Standard Library
 from math import sqrt
-from typing import List, Union, Tuple, Callable, Set
+from typing import Set, List, Tuple, Union, Callable
+
+# Sudoku Stuff
+from sudoku.utils import chunks
+from sudoku.simplifications.base import BaseSimplifier
 
 
 class ReductionSimplification(BaseSimplifier):
