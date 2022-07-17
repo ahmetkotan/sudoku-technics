@@ -38,3 +38,9 @@ def has_in_group(row_no: int, col_no: int, number: int, data: DATA_TYPE):
 
 def has_in_row(row_no: int, number: int, data: DATA_TYPE):
     return number in get_row(row_no=row_no, data=data)
+
+
+def get_group_positions(row_no: int, col_no: int):
+    start_row = row_no - (row_no % 3)
+    start_col = col_no - (col_no % 3)
+    return [(i, j) for i in range(start_row, start_row + 3) for j in range(start_col, start_col + 3)]

@@ -8,11 +8,18 @@ from sudoku.simplifications.double import DoublesSimplification
 from sudoku.simplifications.triple import TripleSimplification
 from sudoku.simplifications.hidden_double import HiddenDoubleSimplification
 from sudoku.simplifications.reduction import ReductionSimplification
+from sudoku.simplifications.sky_scraper import SkyScraperSimplification
 
 
 class Sudoku(DataMixin):
-    methods = [HiddenSingles, Singles]
-    simplifications = [DoublesSimplification, TripleSimplification, HiddenDoubleSimplification, ReductionSimplification]
+    methods = [Singles, HiddenSingles]
+    simplifications = [
+        DoublesSimplification,
+        TripleSimplification,
+        HiddenDoubleSimplification,
+        ReductionSimplification,
+        SkyScraperSimplification,
+    ]
 
     changed: bool = True
     simplification_continue: bool = True
@@ -62,10 +69,15 @@ class Sudoku(DataMixin):
 
     def run_simplifications(self):
         def callback():
+            self.run_technics()
             self.run_simplifications()
 
         for simplifier_class in self.simplifications:
-            simplifier = simplifier_class(initial_data=self.data, possibilities=self.possibilities, callback=callback)
+            simplifier = simplifier_class(
+                initial_data=self.data,
+                possibilities=self.possibilities,
+                callback=callback,
+            )
             simplifier.run()
 
     def solve(self):

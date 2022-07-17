@@ -92,3 +92,14 @@ class DataMixin:
                     counts[n] += 1
 
         return counts
+
+    @staticmethod
+    def get_number_positions(number: int, numbers: List[Union[Tuple[int], int]]) -> List[int]:
+        positions = []
+        for cell_no, cell in enumerate(numbers):
+            if not isinstance(cell, tuple):
+                continue
+            if number in cell:
+                positions.append(cell_no)
+
+        return positions
