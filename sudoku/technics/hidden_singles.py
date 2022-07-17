@@ -17,9 +17,7 @@ class HiddenSingles(BaseTechnic):
         for col_no, number in self.find_hidden_singles(numbers=numbers, counts=counts):
             self.data[row_no][col_no] = number
             self.possibilities[row_no][col_no] = number
-            print(
-                f"Found hidden single in row. Changed {row_no + 1}.row {col_no + 1}.columns with {number}"
-            )
+            print(f"Found hidden single in row. Changed {row_no + 1}.row {col_no + 1}.columns with {number}")
             return self.callback()
 
     def find_hidden_singles_in_column(self, col_no: int):
@@ -28,26 +26,20 @@ class HiddenSingles(BaseTechnic):
         for row_no, number in self.find_hidden_singles(numbers=numbers, counts=counts):
             self.data[row_no][col_no] = number
             self.possibilities[row_no][col_no] = number
-            print(
-                f"Found hidden single in column. Changed {row_no + 1}.row {col_no + 1}.columns with {number}"
-            )
+            print(f"Found hidden single in column. Changed {row_no + 1}.row {col_no + 1}.columns with {number}")
             return self.callback()
 
     def find_hidden_singles_in_group(self, group_no: int):
         start_row = int(group_no / 3) * 3
         start_col = (group_no % 3) * 3
-        numbers = self.get_group(
-            row_no=start_row, col_no=start_col, possibilities=True, as_list=True
-        )
+        numbers = self.get_group(row_no=start_row, col_no=start_col, possibilities=True, as_list=True)
         counts = self.get_possibilities_counts(numbers=numbers)
         for cell_no, number in self.find_hidden_singles(numbers=numbers, counts=counts):
             row_no = start_row + int(cell_no / 3)
             col_no = start_col + cell_no % 3
             self.data[row_no][col_no] = number
             self.possibilities[row_no][col_no] = number
-            print(
-                f"Found hidden single in group. Changed {row_no + 1}.row {col_no + 1}.columns with {number}"
-            )
+            print(f"Found hidden single in group. Changed {row_no + 1}.row {col_no + 1}.columns with {number}")
             return self.callback()
 
     def run(self):

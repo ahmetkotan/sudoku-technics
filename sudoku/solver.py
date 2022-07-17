@@ -45,9 +45,7 @@ class Sudoku(DataMixin):
                     number
                     for number in line_possibilities
                     if not self.has_in_column(column=col_no, number=number)
-                    and not self.has_in_group(
-                        row_no=row_no, col_no=col_no, number=number
-                    )
+                    and not self.has_in_group(row_no=row_no, col_no=col_no, number=number)
                 ]
                 if len(possibilities) == 0:
                     self.print_possibilities()

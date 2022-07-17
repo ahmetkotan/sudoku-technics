@@ -22,14 +22,8 @@ class SkyScraperSimplification(BaseSimplifier):
             + [(i, second_y) for i in range(self.size) if i != second_x]
             + get_group_positions(row_no=second_x, col_no=second_y)
         )
-        intersection_positions = set(first_effected_points).intersection(
-            second_effected_points
-        ) - set(expected_points)
-        return [
-            (x, y)
-            for x, y in intersection_positions
-            if isinstance(self.possibilities[x][y], tuple)
-        ]
+        intersection_positions = set(first_effected_points).intersection(second_effected_points) - set(expected_points)
+        return [(x, y) for x, y in intersection_positions if isinstance(self.possibilities[x][y], tuple)]
 
     def find_intersection_points(self, actual_no: int, get_function: Callable):
         numbers = get_function(actual_no, possibilities=True)
@@ -41,12 +35,8 @@ class SkyScraperSimplification(BaseSimplifier):
                 tmp_numbers = get_function(tmp_no, possibilities=True)
                 tmp_counts = self.get_possibilities_counts(numbers=tmp_numbers)
                 if pair in [key for key, value in tmp_counts.items() if value == 2]:
-                    pair_positions = self.get_number_positions(
-                        number=pair, numbers=numbers
-                    )  # column numbers
-                    tmp_positions = self.get_number_positions(
-                        number=pair, numbers=tmp_numbers
-                    )  # column numbers
+                    pair_positions = self.get_number_positions(number=pair, numbers=numbers)  # column numbers
+                    tmp_positions = self.get_number_positions(number=pair, numbers=tmp_numbers)  # column numbers
                     if pair_positions[0] == tmp_positions[0]:
                         intersection_point = pair_positions[0]
                     elif pair_positions[1] == tmp_positions[1]:
@@ -54,12 +44,8 @@ class SkyScraperSimplification(BaseSimplifier):
                     else:
                         continue
 
-                    first_disc_point = (
-                        set(pair_positions) - {intersection_point}
-                    ).pop()
-                    second_disc_point = (
-                        set(tmp_positions) - {intersection_point}
-                    ).pop()
+                    first_disc_point = (set(pair_positions) - {intersection_point}).pop()
+                    second_disc_point = (set(tmp_positions) - {intersection_point}).pop()
                     if first_disc_point == second_disc_point:
                         continue
                     yield pair, first_disc_point, second_disc_point, intersection_point, tmp_no
@@ -86,9 +72,7 @@ class SkyScraperSimplification(BaseSimplifier):
         ):
             cell = self.possibilities[effected_row][effected_col]
             if pair in cell and len(cell) > 1:
-                self.possibilities[effected_row][effected_col] = tuple(
-                    sorted(set(cell) - {pair})
-                )
+                self.possibilities[effected_row][effected_col] = tuple(sorted(set(cell) - {pair}))
                 self.changed = True
                 yield effected_row, effected_col, cell
 
@@ -120,10 +104,15 @@ class SkyScraperSimplification(BaseSimplifier):
             second_disc_row,
             intersection_point,
             tmp_col,
-        ) in self.find_intersection_points(
-            actual_no=col_no, get_function=self.get_column
-        ):
-            for (effected_row, effected_col, cell) in self.get_effected_points(first_row=first_disc_row, first_col=col_no, second_row=second_disc_row, second_col=tmp_col, intersection_point=intersection_point, pair=pair):
+        ) in self.find_intersection_points(actual_no=col_no, get_function=self.get_column):
+            for (effected_row, effected_col, cell) in self.get_effected_points(
+                first_row=first_disc_row,
+                first_col=col_no,
+                second_row=second_disc_row,
+                second_col=tmp_col,
+                intersection_point=intersection_point,
+                pair=pair,
+            ):
                 print(
                     f"Simplified Skyscraper Column {effected_row + 1}.row {effected_col + 1}.column with "
                     f"{pair}. Old: {cell}"

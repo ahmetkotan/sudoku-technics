@@ -49,14 +49,10 @@ class DataMixin:
         return has_in_column(column=column, number=number, data=self.data)
 
     def get_row(self, row_no: int, possibilities: bool = False) -> List[int]:
-        return get_row(
-            row_no=row_no, data=self.possibilities if possibilities else self.data
-        )
+        return get_row(row_no=row_no, data=self.possibilities if possibilities else self.data)
 
     def get_column(self, col_no: int, possibilities: bool = False) -> List[int]:
-        return get_column(
-            col_no=col_no, data=self.possibilities if possibilities else self.data
-        )
+        return get_column(col_no=col_no, data=self.possibilities if possibilities else self.data)
 
     def get_group(
         self,
@@ -82,9 +78,7 @@ class DataMixin:
         return has_in_group(row_no=row_no, col_no=col_no, number=number, data=self.data)
 
     @staticmethod
-    def get_possibilities_counts(
-        numbers: List[Union[Tuple[int], int]]
-    ) -> Dict[int, int]:
+    def get_possibilities_counts(numbers: List[Union[Tuple[int], int]]) -> Dict[int, int]:
         counts = defaultdict(lambda: 0)
         for number in numbers:
             if isinstance(number, tuple):
