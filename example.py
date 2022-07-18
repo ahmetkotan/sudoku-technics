@@ -7,4 +7,4 @@ data = convert_from_string(string)
 
 u = Sudoku(initial_data=data)
 u.solve()
-u.print_data(show_coordinates=True)
+u.print_possibilities(show_coordinates=True)
