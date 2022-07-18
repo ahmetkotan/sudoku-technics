@@ -2,6 +2,11 @@
 from collections import defaultdict
 from typing import Dict, List, Tuple, Union
 
+# Third Party
+from rich.style import Style
+from rich.table import Table
+from rich.console import Console
+
 # Sudoku Stuff
 from sudoku.getters import get_row, get_group, get_column, has_in_row, has_in_group, has_in_column
 
@@ -11,6 +16,7 @@ class DataMixin:
     possibilities: List[List[Union[Tuple[int], int]]]
     size: int
     changed: bool = True
+    console: Console = Console(style=Style(bold=True))
 
     def get_data(self) -> List[List[int]]:
         return self.data
@@ -18,9 +24,23 @@ class DataMixin:
     def get_possibilities(self) -> List[List[Union[Tuple[int], int]]]:
         return self.possibilities
 
-    def print_data(self, with_rows: bool = False):
-        for n, line in enumerate(self.data):
-            print(f"{n if with_rows else ''} {line}")
+    def generate_table(self, show_coordinates: bool = False) -> Table:
+        table = Table(show_header=show_coordinates, header_style="bold red", show_lines=True)
+        if show_coordinates:
+            for i in range(0 if show_coordinates else 1, self.size + 1):
+                table.add_column(str(i) if i > 0 else "X")
+
+        return table
+
+    def print_data(self, show_coordinates: bool = False):
+        table = self.generate_table(show_coordinates=show_coordinates)
+        for n, line in enumerate(self.data, start=1):
+            row = [str(i) for i in line]
+            if show_coordinates:
+                row.insert(0, f"[bold red]{n}[/bold red]")
+            table.add_row(*row)
+
+        self.console.print(table)
 
     def print_possibilities(self, with_rows: bool = False):
         for n, line in enumerate(self.possibilities):

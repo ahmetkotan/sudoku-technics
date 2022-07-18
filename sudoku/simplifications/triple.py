@@ -33,8 +33,8 @@ class TripleSimplification(BaseSimplifier):
     def simplify_row(self, row_no: int):
         numbers = self.get_row(row_no=row_no, possibilities=True)
         for col_no, remaining in self.simplify_numbers(numbers=numbers):
-            print(
-                f"Simplify Triple {row_no + 1}.row {col_no + 1}.column with {remaining}."
+            self.console.print(
+                f"Simplified Triple {row_no + 1}.row {col_no + 1}.column with {remaining}. "
                 f"Old: {self.possibilities[row_no][col_no]}"
             )
             self.possibilities[row_no][col_no] = remaining
@@ -42,8 +42,8 @@ class TripleSimplification(BaseSimplifier):
     def simplify_column(self, col_no: int):
         numbers = self.get_column(col_no=col_no, possibilities=True)
         for row_no, remaining in self.simplify_numbers(numbers=numbers):
-            print(
-                f"Simplify Triple {row_no + 1}.row {col_no + 1}.column with {remaining}."
+            self.console.print(
+                f"Simplified Triple {row_no + 1}.row {col_no + 1}.column with {remaining}. "
                 f"Old: {self.possibilities[row_no][col_no]}"
             )
             self.possibilities[row_no][col_no] = remaining
@@ -55,8 +55,8 @@ class TripleSimplification(BaseSimplifier):
         for cell_no, remaining in self.simplify_numbers(numbers=numbers):
             row_no = start_row + int(cell_no / 3)
             col_no = start_col + cell_no % 3
-            print(
-                f"Simplify Triple {row_no + 1}.row {col_no + 1}.column with {remaining}."
+            self.console.print(
+                f"Simplified Triple {row_no + 1}.row {col_no + 1}.column with {remaining}. "
                 f"Old: {self.possibilities[row_no][col_no]}"
             )
             self.possibilities[row_no][col_no] = remaining

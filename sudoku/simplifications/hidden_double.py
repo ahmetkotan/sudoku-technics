@@ -26,8 +26,8 @@ class HiddenDoubleSimplification(BaseSimplifier):
     def simplify_row(self, row_no: int):
         numbers = self.get_row(row_no=row_no, possibilities=True)
         for col_no, double in self.find_hidden_doubles(numbers=numbers):
-            print(
-                f"Simplify Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}."
+            self.console.print(
+                f"Simplified Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}. "
                 f"Old: {self.possibilities[row_no][col_no]}"
             )
             self.possibilities[row_no][col_no] = double
@@ -35,8 +35,8 @@ class HiddenDoubleSimplification(BaseSimplifier):
     def simplify_column(self, col_no: int):
         numbers = self.get_column(col_no=col_no, possibilities=True)
         for row_no, double in self.find_hidden_doubles(numbers=numbers):
-            print(
-                f"Simplify Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}."
+            self.console.print(
+                f"Simplified Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}. "
                 f"Old: {self.possibilities[row_no][col_no]}"
             )
             self.possibilities[row_no][col_no] = double
@@ -48,8 +48,8 @@ class HiddenDoubleSimplification(BaseSimplifier):
         for cell_no, double in self.find_hidden_doubles(numbers=numbers):
             row_no = start_row + int(cell_no / 3)
             col_no = start_col + cell_no % 3
-            print(
-                f"Simplify Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}."
+            self.console.print(
+                f"Simplified Hidden Double {row_no + 1}.row {col_no + 1}.column with {double}. "
                 f"Old: {self.possibilities[row_no][col_no]}"
             )
             self.possibilities[row_no][col_no] = double

@@ -60,8 +60,8 @@ class ReductionSimplification(BaseSimplifier):
         if group_no != original_group_no and number in cell:
             remaining = set(cell) - {number}
             if remaining != set(cell):
-                print(
-                    f"Simplified Line Reduction {row_no + 1}.row {col_no + 1}.column with {number}."
+                self.console.print(
+                    f"Simplified Line Reduction {row_no + 1}.row {col_no + 1}.column with {number}. "
                     f"Old: {self.possibilities[row_no][col_no]}"
                 )
                 self.possibilities[row_no][col_no] = tuple(sorted(remaining))

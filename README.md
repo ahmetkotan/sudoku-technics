@@ -17,6 +17,3 @@
 * X-Wing
 * Y-Wing
 * Z-Wing
-
-### Helpers
-* Rich

@@ -97,7 +97,7 @@ class SkyScraperSimplification(BaseSimplifier):
                 intersection_point=intersection_point,
                 pair=pair,
             ):
-                print(
+                self.console.print(
                     f"Simplified Skyscraper Row {effected_row + 1}.row {effected_col + 1}.column with "
                     f"{pair}. Old: {cell}"
                 )
@@ -118,7 +118,7 @@ class SkyScraperSimplification(BaseSimplifier):
                 intersection_point=intersection_point,
                 pair=pair,
             ):
-                print(
+                self.console.print(
                     f"Simplified Skyscraper Column {effected_row + 1}.row {effected_col + 1}.column with "
                     f"{pair}. Old: {cell}"
                 )

@@ -10,4 +10,7 @@ class Singles(BaseTechnic):
                     if len(col) == 1:
                         self.data[row_no][col_no] = col[0]
                         self.possibilities[row_no][col_no] = col[0]
+                        self.console.print(
+                            f"Found Single Possibility in {row_no + 1}.row " f"{col_no + 1}.column as {col[0]}"
+                        )
                         return self.callback()
